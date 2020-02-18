@@ -20,12 +20,11 @@ x <- read_excel(path = "class_enrollment_summary_by_term2.18.20.xlsx", skip = 3)
   #Use filter to get rid of all entries that contain na. 
   filter(! is.na(course_name)) %>%
   group_by(course_department)%>%
-  arrange(desc(total))
-  #summarise(value = sum(UGrad)) %>% 
- #arrange(desc(value)) 
+  summarise(value = sum(total))%>% 
+  arrange(desc(value)) %>% 
+  slice(1:5)
 
 x
-
 
 ```
 
