@@ -1,0 +1,32 @@
+---
+title: "enrollment"
+author: "William Haslam"
+date: "18/02/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(tidyverse)
+library(janitor)
+
+```
+
+```{r}
+
+x <- read_excel(path = "class_enrollment_summary_by_term2.18.20.xlsx", skip = 3) %>%
+  clean_names() %>% 
+  #Use filter to get rid of all entries that contain na. 
+  filter(! is.na(course_name)) %>%
+  group_by(course_department)%>%
+  arrange(desc(total))
+  #summarise(value = sum(UGrad)) %>% 
+ #arrange(desc(value)) 
+
+x
+
+
+```
+
+
