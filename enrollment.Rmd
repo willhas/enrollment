@@ -13,19 +13,45 @@ library(janitor)
 
 ```
 
-```{r}
+```{r spring2020}
 
-x <- read_excel(path = "class_enrollment_summary_by_term2.18.20.xlsx", skip = 3) %>%
+spring20 <- read_excel(path = "class_enrollment_summary_by_term2.18.20.xlsx", skip = 3) %>%
   clean_names() %>% 
   #Use filter to get rid of all entries that contain na. 
-  filter(! is.na(course_name)) %>%
+  filter(! is.na(course_name))
+
+spring20
+
+y <- x %>%
   group_by(course_department)%>%
   summarise(value = sum(total))%>% 
   arrange(desc(value)) %>% 
   slice(1:5)
 
-x
+y
+
+
 
 ```
 
+
+```{r spring2019}
+
+spring19 <- read_excel("class_enrollment_summary_by_term_3.22.19_0.xlsx", skip = 3) %>% 
+  clean_names() %>% 
+  filter(! is.na(course_name))
+
+spring19
+
+```
+
+
+```{r joining}
+
+joined <- spring20 %>% 
+  full_join(spring19, by = c("course_id"), suffix = c("_20", "_19"))
+
+joined
+
+```
 
